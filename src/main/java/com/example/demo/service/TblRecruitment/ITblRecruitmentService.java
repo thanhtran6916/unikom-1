@@ -7,5 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface ITblRecruitmentService extends IGeneralService<TblRecruitment> {
 
-    Page<TblRecruitment> findAll(Pageable pageable);
+    Page<TblRecruitment> findTblRecruitmentsExist(Pageable pageable);
 }

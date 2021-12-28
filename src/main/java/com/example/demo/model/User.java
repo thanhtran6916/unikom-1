@@ -3,7 +3,7 @@ package com.example.demo.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -24,6 +24,9 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @Column(name = "roles")
     private Set<Role> roles;
+
+    @Column(name = "delete_at")
+    private Timestamp deleteAt;
 
     public User() {
     }

@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.util.Optional;
 
 @RestController
@@ -26,47 +25,42 @@ public class TblRecruitmentRestController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<TblRecruitment> tblRecruitments = tblRecruitmentService.findAll(pageable);
+        Page<TblRecruitment> tblRecruitments = tblRecruitmentService.findTblRecruitmentsExist(pageable);
         return new ResponseEntity<>(tblRecruitments, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<TblRecruitment> findById(@PathVariable Long id) {
         Optional<TblRecruitment> tblRecruitmentOptional = tblRecruitmentService.findById(id);
-        if (tblRecruitmentOptional.isPresent()) {
-            return new ResponseEntity<>(tblRecruitmentOptional.get(), HttpStatus.OK);
+        if (!tblRecruitmentOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(tblRecruitmentOptional.get(), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<TblRecruitment> save(@RequestBody TblRecruitment tblRecruitment) {
-        Timestamp createAt = new Timestamp(System.currentTimeMillis());
-        tblRecruitment.setCreateAt(createAt);
         return new ResponseEntity<>(tblRecruitmentService.save(tblRecruitment), HttpStatus.OK);
     }
 
     @PutMapping("{id}")
     public ResponseEntity<TblRecruitment> edit(@PathVariable Long id, @RequestBody TblRecruitment tblRecruitment) {
         Optional<TblRecruitment> tblRecruitmentOptional = tblRecruitmentService.findById(id);
-        if (tblRecruitmentOptional.isPresent()) {
-            TblRecruitment oldTblRecruitment = tblRecruitmentOptional.get();
-            tblRecruitment.setId(oldTblRecruitment.getId());
-            Timestamp updateAt = new Timestamp(System.currentTimeMillis());
-            tblRecruitment.setUpdateAt(updateAt);
-            return new ResponseEntity<>(tblRecruitmentService.save(oldTblRecruitment), HttpStatus.OK);
+        if (!tblRecruitmentOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        TblRecruitment oldTblRecruitment = tblRecruitmentOptional.get();
+        tblRecruitment.setId(oldTblRecruitment.getId());
+        return new ResponseEntity<>(tblRecruitmentService.save(oldTblRecruitment), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<TblRecruitment> delete(@PathVariable Long id) {
-        Optional<TblRecruitment> tblRecruitmentOptional = tblRecruitmentService.findById(id);
-        if (tblRecruitmentOptional.isPresent()) {
-            tblRecruitmentService.deleteById(id);
-            return new ResponseEntity<>(tblRecruitmentOptional.get(), HttpStatus.OK);
+        boolean isDelete = tblRecruitmentService.delete(id);
+        if (isDelete) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

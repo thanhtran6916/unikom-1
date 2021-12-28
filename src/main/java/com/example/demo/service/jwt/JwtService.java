@@ -21,7 +21,7 @@ public class JwtService {
         String token = Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expireTime))
+                .setExpiration(new Date(System.currentTimeMillis() + expireTime * 1000))
                 .signWith(SignatureAlgorithm.HS512, secretCode)
                 .compact();
         return token;
