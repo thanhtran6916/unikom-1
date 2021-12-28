@@ -21,6 +21,11 @@ public class TblRecruitmentService implements ITblRecruitmentService {
     }
 
     @Override
+    public Iterable<TblRecruitment> findAll() {
+        return tblRecruitmentRepository.findAll();
+    }
+
+    @Override
     public Optional<TblRecruitment> findById(Long id) {
         return tblRecruitmentRepository.findById(id);
     }
