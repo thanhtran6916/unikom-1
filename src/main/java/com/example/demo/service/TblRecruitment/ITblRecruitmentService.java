@@ -1,6 +1,7 @@
-package com.example.demo.service;
+package com.example.demo.service.TblRecruitment;
 
 import com.example.demo.model.TblRecruitment;
+import com.example.demo.service.IGeneralService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
