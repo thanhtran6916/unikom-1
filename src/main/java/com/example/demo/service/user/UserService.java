@@ -5,17 +5,20 @@ import com.example.demo.model.UserPrincipal;
 import com.example.demo.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UserService implements IUserService, UserDetailsService {
+public class UserService implements IUserService {
 
     @Autowired
     private IUserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Iterable<User> findAll() {
@@ -29,6 +32,7 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public User save(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -42,5 +46,10 @@ public class UserService implements IUserService, UserDetailsService {
         User user = userRepository.findByUsername(username);
         UserDetails userDetails = UserPrincipal.build(user);
         return userDetails;
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }
