@@ -53,5 +53,6 @@ public class TblRecruitment {
     @Column(name = "create_by")
     private String createBy;
 
+    @Column(name = "update_by")
     private String updateBy;
 }
