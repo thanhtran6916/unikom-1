@@ -1,15 +1,17 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Student;
+import com.example.demo.model.TblRecruitment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
 public interface IGeneralService {
-    Iterable<Student> findAll();
+    Page<TblRecruitment> findAll(Pageable pageable);
 
-    Optional<Student> findById(Long id);
+    Optional<TblRecruitment> findById(Long id);
 
-    Student save(Student student);
+    TblRecruitment save(TblRecruitment tblRecruitment);
 
     void deleteById(Long id);
 }
