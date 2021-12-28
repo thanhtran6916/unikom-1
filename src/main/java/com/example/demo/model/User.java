@@ -25,7 +25,7 @@ public class User {
     @Column(name = "roles")
     private Set<Role> roles;
 
-    @Column(name = "delete_at")
+    @Column(name = "delete_at", columnDefinition = "timestamp NULL DEFAULT NULL")
     private Timestamp deleteAt;
 
     public User() {

@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -36,19 +38,19 @@ public class TblRecruitment {
     private String attitude;
 
     @Column(name = "expireDate")
-    private Date expireDate;
+    private LocalDate expireDate;
 
     @Column(name = "salary")
     private String salary;
 
     @Column(name = "is_delete")
-    private Boolean isDeleted;
+    private boolean isDeleted;
 
-    @Column(name = "create_at",columnDefinition = "timestamp NULL DEFAULT NULL")
-    private Timestamp createAt;
+    @Column(name = "create_at")
+    private LocalDateTime createAt;
 
-    @Column(name = "update_at",columnDefinition = "timestamp NULL DEFAULT NULL")
-    private Timestamp updateAt;
+    @Column(name = "update_at")
+    private LocalDateTime updateAt;
 
     @Column(name = "create_by")
     private String createBy;

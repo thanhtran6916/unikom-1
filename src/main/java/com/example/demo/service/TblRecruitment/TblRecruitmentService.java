@@ -46,14 +46,14 @@ public class TblRecruitmentService implements ITblRecruitmentService {
         User user = userService.findByUsername(userDetails.getUsername());
         if (tblRecruitment.getId() != null) {
             Timestamp updateAt = new Timestamp(System.currentTimeMillis());
-            tblRecruitment.setUpdateAt(updateAt);
-            tblRecruitment.setUpdateBy(user.getId().toString());
+//            tblRecruitment.setUpdateAt(updateAt);
+//            tblRecruitment.setUpdateBy(user.getId().toString());
             return tblRecruitmentRepository.save(tblRecruitment);
         }
         Timestamp createAt = new Timestamp(System.currentTimeMillis());
-        tblRecruitment.setCreateAt(createAt);
+//        tblRecruitment.setCreateAt(createAt);
         tblRecruitment.setCreateBy(user.getId().toString());
-        tblRecruitment.setIsDeleted(false);
+//        tblRecruitment.setIsDeleted(false);
         return tblRecruitmentRepository.save(tblRecruitment);
     }
 
@@ -64,7 +64,8 @@ public class TblRecruitmentService implements ITblRecruitmentService {
             return false;
         }
         TblRecruitment tblRecruitment = tblRecruitmentOptional.get();
-        tblRecruitment.setIsDeleted(true);
+//        tblRecruitment.setIsDeleted(true);
+        tblRecruitmentRepository.save(tblRecruitment);
         return true;
     }
 }
