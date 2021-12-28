@@ -21,18 +21,14 @@ public class JwtService {
         String token = Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + expireTime))
+                .setExpiration(new Date(System.currentTimeMillis() + expireTime))
                 .signWith(SignatureAlgorithm.HS512, secretCode)
                 .compact();
         return token;
     }
 
     public String getUsernameByToken(String token) {
-        String username = Jwts.parser()
-                .setSigningKey(secretCode)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        String username = Jwts.parser().setSigningKey(secretCode).parseClaimsJws(token).getBody().getSubject();
         return username;
     }
 }

@@ -17,9 +17,6 @@ public class UserService implements IUserService {
     @Autowired
     private IUserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Override
     public Iterable<User> findAll() {
         return userRepository.findAll();
@@ -32,7 +29,6 @@ public class UserService implements IUserService {
 
     @Override
     public User save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
