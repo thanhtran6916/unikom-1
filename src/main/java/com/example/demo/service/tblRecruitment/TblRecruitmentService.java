@@ -1,5 +1,7 @@
-package com.example.demo.service.TblRecruitment;
+package com.example.demo.service.tblRecruitment;
 
+import com.example.demo.exception.NotFoundException;
+import com.example.demo.helper.CustomExceptionHandler;
 import com.example.demo.model.TblRecruitment;
 import com.example.demo.model.User;
 import com.example.demo.repository.ITblRecruitmentRepository;
@@ -26,16 +28,28 @@ public class TblRecruitmentService implements ITblRecruitmentService {
 
     @Override
     public Page<TblRecruitment> findTblRecruitmentsExist(Pageable pageable) {
-        return tblRecruitmentRepository.findTblRecruitmentsExist(pageable);
+        Page<TblRecruitment> tblRecruitments = tblRecruitmentRepository.findTblRecruitmentsExist(pageable);
+        if (tblRecruitments == null) {
+            throw new NotFoundException("Not found entity");
+        }
+        return tblRecruitments;
     }
 
     @Override
     public Iterable<TblRecruitment> findAll() {
-        return tblRecruitmentRepository.findAll();
+        Iterable<TblRecruitment> tblRecruitments = tblRecruitmentRepository.findAll();
+        if (tblRecruitments == null) {
+            throw new NotFoundException("Not found entity");
+        }
+        return tblRecruitments;
     }
 
     @Override
     public Optional<TblRecruitment> findById(Long id) {
+        Optional<TblRecruitment> tblRecruitmentOptional = tblRecruitmentRepository.findById(id);
+        if (!tblRecruitmentOptional.isPresent()) {
+            throw new NotFoundException(NotFoundException.ID_NOT_FOUND);
+        }
         return tblRecruitmentRepository.findById(id);
     }
 
@@ -61,7 +75,7 @@ public class TblRecruitmentService implements ITblRecruitmentService {
     public boolean delete(Long id) {
         Optional<TblRecruitment> tblRecruitmentOptional = tblRecruitmentRepository.findById(id);
         if (!tblRecruitmentOptional.isPresent()) {
-            return false;
+            throw new NotFoundException(NotFoundException.ID_NOT_FOUND);
         }
         TblRecruitment tblRecruitment = tblRecruitmentOptional.get();
 //        tblRecruitment.setIsDeleted(true);

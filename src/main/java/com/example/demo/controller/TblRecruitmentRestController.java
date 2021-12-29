@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.TblRecruitment;
-import com.example.demo.service.TblRecruitment.ITblRecruitmentService;
+import com.example.demo.service.tblRecruitment.ITblRecruitmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

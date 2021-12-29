@@ -1,4 +1,4 @@
-package com.example.demo.service.TblRecruitment;
+package com.example.demo.service.tblRecruitment;
 
 import com.example.demo.model.TblRecruitment;
 import com.example.demo.service.IGeneralService;

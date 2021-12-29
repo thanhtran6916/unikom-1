@@ -1,5 +1,6 @@
 package com.example.demo.service.user;
 
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.User;
 import com.example.demo.model.UserPrincipal;
 import com.example.demo.repository.IUserRepository;
@@ -24,7 +25,11 @@ public class UserService implements IUserService {
 
     @Override
     public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+        Optional<User> userOptional = userRepository.findById(id);
+        if (!userOptional.isPresent()) {
+            throw new NotFoundException(NotFoundException.ID_NOT_FOUND);
+        }
+        return userOptional;
     }
 
     @Override
@@ -36,7 +41,7 @@ public class UserService implements IUserService {
     public boolean delete(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (!userOptional.isPresent()) {
-            return false;
+            throw new NotFoundException(NotFoundException.ID_NOT_FOUND);
         }
         User user = userOptional.get();
         user.setDeleteAt(new Timestamp(System.currentTimeMillis()));
@@ -53,6 +58,10 @@ public class UserService implements IUserService {
 
     @Override
     public User findByUsername(String username) {
-        return userRepository.findUserExistByUsername(username);
+        User user = userRepository.findUserExistByUsername(username);
+        if (user == null) {
+            throw new NotFoundException("Username dose not exist");
+        }
+        return user;
     }
 }
