@@ -1,14 +1,18 @@
 package com.example.demo.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Entity
-public class TblRecruitment {
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "tbl_recruitment")
+public class TblRecruitment extends Auditable<String> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "int", length = 11, nullable = false)
@@ -43,16 +47,4 @@ public class TblRecruitment {
 
     @Column(name = "is_delete")
     private boolean isDeleted;
-
-    @Column(name = "create_at")
-    private LocalDateTime createAt;
-
-    @Column(name = "update_at")
-    private LocalDateTime updateAt;
-
-    @Column(name = "create_by")
-    private String createBy;
-
-    @Column(name = "update_by")
-    private String updateBy;
 }

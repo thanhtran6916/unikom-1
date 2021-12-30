@@ -1,12 +1,10 @@
 package com.example.demo.exception;
 
-public class NotAcceptableException extends RuntimeException {
+public class NotSaveException extends RuntimeException {
 
-    public static final String PRE_PERSIST = "Data save failed error";
+    public static final String SAVE_PERSIST = "Data save failed error";
 
-    public static final String 
-
-    public NotAcceptableException(String message) {
+    public NotSaveException(String message) {
         super(message);
     }
 }
